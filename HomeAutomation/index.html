@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+<body>
+    <div ng-app="myApp" ng-controller="myCtrl">
+        <table>
+            <tr>
+                <th>Application</th>
+                <th>input1</th>
+                <th>input2</th>
+            </tr>
+            <tr>
+                <td>Light</td>
+                <td>
+                    <button ng-click="lightOneOn()">light On</button>
+                </td>
+                <td>
+                    <button ng-click="lightOneOff()">light Off</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Charging</td>
+                <td>
+                    <input name="myAddress" ng-model="timeInMinute">
+                </td>
+                <td>
+                    <button ng-click="charging()">Start Charging</button>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope, $http) {
+            // $scope.showMe = false;
+            $scope.timeInMinute = 1;
+            $scope.lightOneOn = function () {
+                let startURL = "http://192.168.225.202:5002/light/on";
+                console.log("startURL - ", startURL);
+                // $http({
+                //     method: "GET",
+                //     url: startURL
+                // }).then(function mySuccess(response) {
+                //     $scope.myWelcome = response.data;
+                // }, function myError(response) {
+                //     $scope.myWelcome = response.statusText;
+                // });
+                $http.get(startURL)
+                    .then(function (response) {
+                        console.log("lightOneOn")
+                    });
+
+            }
+            $scope.lightOneOff = function () {
+                let stopURL = "http://192.168.225.202:5002/light/off";
+                console.log("stopURL - ", stopURL);
+                $http.get(stopURL)
+                    .then(function (response) {
+                        console.log("lightOneOff")
+                    });
+            }
+
+            $scope.charging = function () {
+                console.log("$scope.timeInMinute - ", $scope.timeInMinute);
+                let stopURL = "http://192.168.225.202:5002/charger/" + $scope.timeInMinute;
+                console.log("stopURL - ", stopURL);
+                $http.get(stopURL)
+                    .then(function (response) {
+                        console.log("lightOneOff")
+                    });
+            }
+        });
+    </script>
+</body>
+
+</html>
