@@ -1,2 +1,2 @@
-# RaspberryPi-Home-Automation-
+# RaspberryPi-Home-Automation
 Raspberry Pi Home Automation codes 
